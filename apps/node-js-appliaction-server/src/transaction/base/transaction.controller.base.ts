@@ -22,6 +22,7 @@ import { Transaction } from "./Transaction";
 import { TransactionFindManyArgs } from "./TransactionFindManyArgs";
 import { TransactionWhereUniqueInput } from "./TransactionWhereUniqueInput";
 import { TransactionUpdateInput } from "./TransactionUpdateInput";
+import { TransactionInput } from "../TransactionInput";
 
 export class TransactionControllerBase {
   constructor(protected readonly service: TransactionService) {}
@@ -127,5 +128,22 @@ export class TransactionControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/custom")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CreateTransactionFromTextOrAudio(
+    @common.Body()
+    body: TransactionInput
+  ): Promise<string> {
+    return this.service.CreateTransactionFromTextOrAudio(body);
   }
 }

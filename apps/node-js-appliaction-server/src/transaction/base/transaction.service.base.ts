@@ -11,6 +11,7 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, Transaction as PrismaTransaction } from "@prisma/client";
+import { TransactionInput } from "../TransactionInput";
 
 export class TransactionServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +46,10 @@ export class TransactionServiceBase {
     args: Prisma.TransactionDeleteArgs
   ): Promise<PrismaTransaction> {
     return this.prisma.transaction.delete(args);
+  }
+  async CreateTransactionFromTextOrAudio(
+    args: TransactionInput
+  ): Promise<string> {
+    throw new Error("Not implemented");
   }
 }

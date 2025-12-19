@@ -18,6 +18,7 @@ import { TransactionCountArgs } from "./TransactionCountArgs";
 import { TransactionFindManyArgs } from "./TransactionFindManyArgs";
 import { TransactionFindUniqueArgs } from "./TransactionFindUniqueArgs";
 import { DeleteTransactionArgs } from "./DeleteTransactionArgs";
+import { TransactionInput } from "../TransactionInput";
 import { TransactionService } from "../transaction.service";
 @graphql.Resolver(() => Transaction)
 export class TransactionResolverBase {
@@ -64,5 +65,13 @@ export class TransactionResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => String)
+  async CreateTransactionFromTextOrAudio(
+    @graphql.Args()
+    args: TransactionInput
+  ): Promise<string> {
+    return this.service.CreateTransactionFromTextOrAudio(args);
   }
 }
